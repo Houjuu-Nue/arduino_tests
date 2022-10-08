@@ -10,6 +10,18 @@ void setup() {
   
 
 }
+void line(){
+
+  int val = analogRead(1);
+
+  val=map(val,55,426,0,8);
+  for(int i=0; i<val; i++)
+    digitalWrite(m[i], HIGH);
+  delay(3);
+  for(int i=0; i<val; i++)
+    digitalWrite(m[i], LOW);
+
+}
 
 void buzz(int frq, int d, int i){
   int n=0;
@@ -45,28 +57,22 @@ val1=map(val1,0,70,0,8);
 }
 
 void loop() {
-int i=0;
-  switch(i){
-    case 1:
-    while(digitalRead(4)==0)
-      ledM();
-    i=0;
-    break;
-    
-    case 2:
-    while(digitalRead(2)==0)
-      ledA();
-    buzz(4000, 300, 2);
-    i=0;
-    break;
-    
-    default:
-    while(i==0){
-    if(digitalRead(2)==1)
-      i=2;
-    if(digitalRead(4)==1)
-      i=1;
-    }
-    break;
+
+if (digitalRead(2)==1){
+  delay(900);
+  while(digitalRead(2)==0){
+    ledA();
   }
+  buzz(4000, 100, 1);
+
+  while(digitalRead(2)==0){
+    ledM();
+  }
+  buzz(4000, 100, 2);
+  while(digitalRead(2)==0){
+    line();
+  }
+  buzz(4000, 100, 3);
+}
+
 }
